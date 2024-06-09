@@ -1,21 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {UserInfo} from "../types/userInfo.ts";
-
-
-
-const getUserInfo = () => {
-    const userInfoJSON : string | null | undefined = localStorage.getItem('userInfo');
-    console.log(`type of userInfoJSON: ${typeof userInfoJSON}`);
-    if (userInfoJSON) {
-        try {
-            return JSON.parse(userInfoJSON);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-    return null;
-}
-
+import { createSlice } from '@reduxjs/toolkit';
+import { UserInfo } from "../types/userInfo";
+import { getUserInfo } from '../utils/auth.util'; // Adjust the path as needed
 
 interface AuthState {
     userInfo: UserInfo | null;
@@ -24,8 +9,6 @@ interface AuthState {
 const initialState: AuthState = {
     userInfo: getUserInfo(),
 };
-
-
 
 const authSlice = createSlice({
     name: 'auth',
