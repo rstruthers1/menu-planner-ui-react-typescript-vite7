@@ -22,6 +22,8 @@ const RegisterScreen = () => {
 
     }
 
+    console.log('API Base URL:', import.meta.env.VITE_API_BASE_URL);
+
 
     return (
         <FormContainer>
