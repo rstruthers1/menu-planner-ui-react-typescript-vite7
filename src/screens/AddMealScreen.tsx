@@ -3,6 +3,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { useAddMealMutation } from '../services/meal.api.ts';
 import FormContainer from "../components/FormContainer.tsx";
 import RenderError from "../components/RenderError.tsx";
+import {Link} from "react-router-dom";
 
 const AddMealScreen = () => {
     const [name, setName] = useState('');
@@ -62,6 +63,9 @@ const AddMealScreen = () => {
             {isError && <Alert title="Error" variant="warning"><RenderError error={error}/></Alert>}
             {isSuccess && <p>Meal added successfully!</p>}
             {isLoading && <p>Loading...</p>}
+            <Link to="/dashboard">
+                <Button variant="primary" className="mt-3">Back to Dashboard</Button>
+            </Link>
         </FormContainer>
     );
 }
