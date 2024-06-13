@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchMealsQuery } from '../services/meal.api.ts';
-import { Form, Table, Pagination, Alert } from 'react-bootstrap';
+import {Form, Table, Pagination, Alert, Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -117,6 +118,9 @@ const MenuSearchScreen = () => {
 
             {(isLoading || isTyping) && <p>Loading...</p>}
             {isFetching && <p>Searching...</p>}
+            <Link to="/dashboard">
+                <Button variant="primary" className="mt-3">Back to Dashboard</Button>
+            </Link>
         </div>
     );
 };
