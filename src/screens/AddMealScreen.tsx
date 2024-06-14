@@ -63,9 +63,7 @@ const AddMealScreen = () => {
             {isError && <Alert title="Error" variant="warning"><RenderError error={error}/></Alert>}
             {isSuccess && <p>Meal added successfully!</p>}
             {isLoading && <p>Loading...</p>}
-            <Link to="/dashboard">
-                <Button variant="primary" className="mt-3">Back to Dashboard</Button>
-            </Link>
+            <Link to='/dashboard' className='mt-4'>Back to Dashboard</Link>
         </FormContainer>
     );
 }

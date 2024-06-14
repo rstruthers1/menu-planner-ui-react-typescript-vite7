@@ -15,6 +15,7 @@ import DashboardScreen from "./screens/DashboardScreen.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import AddMealScreen from "./screens/AddMealScreen.tsx";
 import MenuSearchScreen from "./screens/MenuSearchScreen.tsx";
+import AddRecipeScreen from "./screens/AddRecipeScreen.tsx";
 
 
 const router = createBrowserRouter(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
                 <Route path="/dashboard" element={<DashboardScreen/>}/>
                 <Route path="/add-meal" element={<AddMealScreen/>}/>
                 <Route path="/search-meals" element={<MenuSearchScreen/>}/>
+                <Route path="/add-recipe" element={<AddRecipeScreen/>}/>
             </Route>
 
         </Route>
