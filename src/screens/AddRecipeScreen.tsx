@@ -12,6 +12,7 @@ const AddRecipeScreen = () => {
     const [url, setUrl] = useState('');
     const [cookbook, setCookbook] = useState('');
     const [page, setPage] = useState('');
+    const [validated, setValidated] = useState(false);
 
     const [addRecipe, { isLoading, isSuccess, isError, error }] = useAddRecipeMutation();
 
@@ -24,16 +25,23 @@ const AddRecipeScreen = () => {
         } catch (e) {
             pageNumber = undefined;
         }
-        await addRecipe({ name, description, instructions, url, cookbook, page: pageNumber });
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            await addRecipe({name, description, instructions, url, cookbook, page: pageNumber});
+        }
+        setValidated(true);
     }
 
     return (
         <FormContainer>
             <h1>Add Recipe</h1>
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={submitHandler} noValidate validated={validated}>
                 <Form.Group className='my-2' controlId='name'>
-                    <Form.Label>Recipe Name</Form.Label>
+                    <Form.Label>Recipe Name *</Form.Label>
                     <Form.Control
+                        required
                         type='text'
                         placeholder='Enter recipe name'
                         value={name}
@@ -46,7 +54,8 @@ const AddRecipeScreen = () => {
                 <Form.Group className='my-2' controlId='description'>
                     <Form.Label>Description</Form.Label>
                     <Form.Control
-                        type='text'
+                        as='textarea'
+                        rows={3}
                         placeholder='Enter description'
                         value={description}
                         disabled={isLoading}
@@ -54,16 +63,7 @@ const AddRecipeScreen = () => {
                     ></Form.Control>
                 </Form.Group>
 
-                <Form.Group className='my-2' controlId='instructions'>
-                    <Form.Label>Instructions</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Enter instructions'
-                        value={instructions}
-                        disabled={isLoading}
-                        onChange={(e) => setInstructions(e.target.value)}
-                    ></Form.Control>
-                </Form.Group>
+
 
                 <Form.Group className='my-2' controlId='url'>
                     <Form.Label>Recipe URL</Form.Label>
@@ -95,6 +95,18 @@ const AddRecipeScreen = () => {
                         value={page}
                         disabled={isLoading}
                         onChange={(e) => setPage(e.target.value)}
+                    ></Form.Control>
+                </Form.Group>
+
+                <Form.Group className='my-2' controlId='instructions'>
+                    <Form.Label>Instructions</Form.Label>
+                    <Form.Control
+                        as='textarea'
+                        rows={3}
+                        placeholder='Enter instructions'
+                        value={instructions}
+                        disabled={isLoading}
+                        onChange={(e) => setInstructions(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 

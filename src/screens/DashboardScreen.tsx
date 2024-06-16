@@ -55,13 +55,13 @@ const DashboardScreen = () => {
                 <Col md={6} className="mb-4">
                     <Card className="h-100">
                         <Card.Body className="d-flex flex-column">
-                            <Card.Title>Search Meals</Card.Title>
+                            <Card.Title>Search Recipes</Card.Title>
                             <Card.Text className="flex-grow-1">
                                 Search for Recipes.
                             </Card.Text>
-                            <Link to="/search-meals">
-                                <Button disabled variant="primary">Search Recipees</Button>
-                            </Link>
+                            <span>
+                                <Button disabled variant="primary">Search Recipes</Button>
+                            </span>
                         </Card.Body>
                     </Card>
                 </Col>

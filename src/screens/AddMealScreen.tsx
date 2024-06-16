@@ -9,22 +9,30 @@ const AddMealScreen = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
+    const [validated, setValidated] = useState(false);
 
     const [addMeal, { isLoading, isSuccess, isError, error }] = useAddMealMutation();
 
     const submitHandler = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('submit');
-        await addMeal({ name, description, url });
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            await addMeal({ name, description, url });
+        }
+        setValidated(true);
     }
 
     return (
         <FormContainer>
             <h1>Add Meal</h1>
-            <Form onSubmit={submitHandler}>
+            <Form  noValidate validated={validated} onSubmit={submitHandler}>
                 <Form.Group className='my-2' controlId='name'>
-                    <Form.Label>Meal Name</Form.Label>
+                    <Form.Label>Meal Name *</Form.Label>
                     <Form.Control
+                        required
                         type='text'
                         placeholder='Enter meal name'
                         value={name}
