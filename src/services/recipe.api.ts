@@ -10,6 +10,7 @@ interface RecipeRequest {
     url: string;
     cookbook?: string;
     page?: number;
+    imageFileName: string;
 }
 
 interface RecipeResponse {
@@ -20,6 +21,7 @@ interface RecipeResponse {
     url: string;
     cookbook?: string;
     page?: number;
+    imageFileName?: string;
 }
 
 interface RecipeSearchParams {

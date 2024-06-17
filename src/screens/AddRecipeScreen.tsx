@@ -12,6 +12,7 @@ const AddRecipeScreen = () => {
     const [url, setUrl] = useState('');
     const [cookbook, setCookbook] = useState('');
     const [page, setPage] = useState('');
+    const [imageFileName, setImageFileName] = useState('');
     const [validated, setValidated] = useState(false);
 
     const [addRecipe, { isLoading, isSuccess, isError, error }] = useAddRecipeMutation();
@@ -29,9 +30,35 @@ const AddRecipeScreen = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            await addRecipe({name, description, instructions, url, cookbook, page: pageNumber});
+            await addRecipe({name, description, instructions, url, cookbook, page: pageNumber, imageFileName: imageFileName});
         }
         setValidated(true);
+    }
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+
+            const formData = new FormData();
+            formData.append('file', e.target.files[0]);
+
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/images/upload`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setImageFileName(data.imageFileName);
+                    console.log(`Image uploaded: ${data.imageFileName}`)
+                } else {
+                    console.error('Error uploading image:');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+        }
     }
 
     return (
@@ -108,6 +135,20 @@ const AddRecipeScreen = () => {
                         disabled={isLoading}
                         onChange={(e) => setInstructions(e.target.value)}
                     ></Form.Control>
+                </Form.Group>
+
+                <Form.Group className='my-2' controlId='image'>
+                    <Form.Label>Upload Image</Form.Label>
+                    <Form.Control
+                        type='file'
+                        onChange={handleImageUpload}
+                        disabled={isLoading}
+                    ></Form.Control>
+                    {imageFileName && (
+                        <div className='mt-3'>
+                            <img src={`${import.meta.env.VITE_API_BASE_URL}/api/images/${imageFileName}`} alt="Uploaded" style={{ maxWidth: '100%' }} />
+                        </div>
+                    )}
                 </Form.Group>
 
                 <Button type='submit' variant='primary' className='mt-3' disabled={isLoading}>
