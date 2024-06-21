@@ -59,9 +59,9 @@ const DashboardScreen = () => {
                             <Card.Text className="flex-grow-1">
                                 Search for Recipes.
                             </Card.Text>
-                            <span>
-                                <Button disabled variant="primary">Search Recipes</Button>
-                            </span>
+                            <Link to="/search-recipes">
+                                <Button variant="primary">Search Recipes</Button>
+                            </Link>
                         </Card.Body>
                     </Card>
                 </Col>
