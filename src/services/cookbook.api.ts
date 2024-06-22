@@ -52,9 +52,11 @@ export const cookbookApi = createApi({
         }),
         searchCookbooks: builder.query<CookbookSearchResponse, CookbookSearchParams>({
             query: (params) => ({
-                url: '',
+                url: 'search',
+                method: 'GET',
                 params,
             }),
+            providesTags: ['Cookbook'],
         }),
     }),
     }

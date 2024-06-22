@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchRecipesQuery} from "../services/recipe.api.ts";
-import {Form, Table, Pagination, Alert} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {useSearchCookbooksQuery} from "../services/cookbook.api.ts";
+import {Alert, Form, Pagination, Table} from 'react-bootstrap';
+import {Link} from "react-router-dom";
+
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -15,7 +16,7 @@ const debounce = <F extends (...args: string[]) => void>(func: F, delay: number)
     };
 };
 
-const RecipeSearchScreen = () => {
+const CookbookSearchScreen = () => {
     const [searchParams, setSearchParams] = useState({
         name: '',
         page: 0,
@@ -26,7 +27,7 @@ const RecipeSearchScreen = () => {
     const [isTyping, setIsTyping] = useState(false);
 
     // Destructure data and status from the query hook
-    const { data, error, isLoading, isFetching, refetch } = useSearchRecipesQuery(searchParams);
+    const { data, error, isLoading, isFetching, refetch } = useSearchCookbooksQuery(searchParams);
 
     // Debounced search handler
     const debouncedSearch = useMemo(
@@ -84,19 +85,15 @@ const RecipeSearchScreen = () => {
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Description</th>
-                            <th>URL</th>
                             <th>imageFileName</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {data.content.map((recipe) => (
-                            <tr key={recipe.id}>
-                                <td>{recipe.id}</td>
-                                <td>{recipe.name}</td>
-                                <td>{recipe.description}</td>
-                                <td><a href={recipe.url} target="_blank" rel="noopener noreferrer">{recipe.url}</a></td>
-                                <td>{recipe.imageFileName}</td>
+                        {data.content.map((cookbook) => (
+                            <tr key={cookbook.id}>
+                                <td>{cookbook.id}</td>
+                                <td>{cookbook.name}</td>
+                                <td>{cookbook.imageFileName}</td>
                             </tr>
                         ))}
                         </tbody>
@@ -125,4 +122,4 @@ const RecipeSearchScreen = () => {
     );
 };
 
-export default RecipeSearchScreen;
+export default CookbookSearchScreen;

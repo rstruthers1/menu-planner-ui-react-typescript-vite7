@@ -18,6 +18,7 @@ import MenuSearchScreen from "./screens/MenuSearchScreen.tsx";
 import AddRecipeScreen from "./screens/AddRecipeScreen.tsx";
 import RecipeSearchScreen from "./screens/RecipSearchScreen.tsx";
 import AddCookbookScreen from "./screens/AddCookbookScreen.tsx";
+import CookbookSearchScreen from "./screens/CookbookSearchScreen.tsx";
 
 
 const router = createBrowserRouter(
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
                 <Route path="/add-recipe" element={<AddRecipeScreen/>}/>
                 <Route path="/search-recipes" element={<RecipeSearchScreen/>}/>
                 <Route path="/add-cookbook" element={<AddCookbookScreen/>}/>
+                <Route path="/search-cookbooks" element={<CookbookSearchScreen/>}/>
             </Route>
 
         </Route>
