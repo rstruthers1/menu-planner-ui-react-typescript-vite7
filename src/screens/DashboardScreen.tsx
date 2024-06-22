@@ -80,6 +80,19 @@ const DashboardScreen = () => {
                         </Card.Body>
                     </Card>
                 </Col>
+                <Col md={6} className="mb-4">
+                    <Card className="h-100">
+                        <Card.Body className="d-flex flex-column">
+                            <Card.Title>Search Cookbooks</Card.Title>
+                            <Card.Text className="flex-grow-1">
+                                Search for Cookbooks.
+                            </Card.Text>
+                            <Link to="/search-cookbooks">
+                                <Button variant="primary">Search Cookbooks</Button>
+                            </Link>
+                        </Card.Body>
+                    </Card>
+                </Col>
             </Row>
         </Container>
     );

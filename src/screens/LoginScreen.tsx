@@ -74,7 +74,7 @@ const LoginScreen = () => {
     return (
         <>
             <Helmet>
-                <title>Login</title>
+                <title>Menu Planner</title>
             </Helmet>
 
             <FormContainer>
