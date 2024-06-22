@@ -66,6 +66,21 @@ const DashboardScreen = () => {
                     </Card>
                 </Col>
             </Row>
+            <Row className="mt-4">
+                <Col md={6} className="mb-4">
+                    <Card className="h-100">
+                        <Card.Body className="d-flex flex-column">
+                            <Card.Title>Add Cookbook</Card.Title>
+                            <Card.Text className="flex-grow-1">
+                                Add a new Cookbook.
+                            </Card.Text>
+                            <Link to="/add-cookbook">
+                                <Button variant="primary">Add Cookbook</Button>
+                            </Link>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
         </Container>
     );
 };
