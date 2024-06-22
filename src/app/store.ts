@@ -4,6 +4,7 @@ import { helloApi } from '../services/hello.api';
 import {userApi} from '../services/user.api';
 import {mealApi} from "../services/meal.api.ts";
 import {recipeApi} from "../services/recipe.api.ts";
+import {cookbookApi} from "../services/cookbook.api.ts";
 import authReducer from '../slices/authSlice';
 
 
@@ -15,10 +16,16 @@ export const store = configureStore({
         [userApi.reducerPath]: userApi.reducer,
         [mealApi.reducerPath]: mealApi.reducer,
         [recipeApi.reducerPath]: recipeApi.reducer,
+        [cookbookApi.reducerPath]: cookbookApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApi.middleware).concat(helloApi.middleware).concat(userApi.middleware)
-            .concat(mealApi.middleware).concat(recipeApi.middleware),
+        getDefaultMiddleware()
+            .concat(authApi.middleware)
+            .concat(helloApi.middleware)
+            .concat(userApi.middleware)
+            .concat(mealApi.middleware)
+            .concat(recipeApi.middleware)
+            .concat(cookbookApi.middleware),
     devTools: true
 });
 
