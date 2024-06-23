@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {CookbookResponse} from "./cookbook.api.ts";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 const BASE_URL = `${baseURL}/api/recipes`;
@@ -8,7 +9,7 @@ interface RecipeRequest {
     description: string;
     instructions: string;
     url: string;
-    cookbook?: string;
+    cookbookId?: number;
     page?: number;
     imageFileName: string;
 }
@@ -19,7 +20,7 @@ interface RecipeResponse {
     description: string;
     instructions: string;
     url: string;
-    cookbook?: string;
+    cookbook?: CookbookResponse;
     page?: number;
     imageFileName?: string;
 }
@@ -28,6 +29,7 @@ interface RecipeSearchParams {
     name: string;
     page: number;
     size: number;
+    sort: string;
 }
 
 interface RecipeSearchResponse {

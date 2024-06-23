@@ -20,6 +20,7 @@ const RecipeSearchScreen = () => {
         name: '',
         page: 0,
         size: 10,
+        sort: 'name,asc',
     });
 
     const [searchTerm, setSearchTerm] = useState(searchParams.name);
@@ -86,7 +87,8 @@ const RecipeSearchScreen = () => {
                             <th>Name</th>
                             <th>Description</th>
                             <th>URL</th>
-                            <th>imageFileName</th>
+                            <th>Image File Name</th>
+                            <th>Cookbook</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -97,6 +99,7 @@ const RecipeSearchScreen = () => {
                                 <td>{recipe.description}</td>
                                 <td><a href={recipe.url} target="_blank" rel="noopener noreferrer">{recipe.url}</a></td>
                                 <td>{recipe.imageFileName}</td>
+                                <td>{recipe.cookbook?.name}</td>
                             </tr>
                         ))}
                         </tbody>

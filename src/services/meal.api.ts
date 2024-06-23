@@ -20,6 +20,7 @@ interface MealSearchParams {
     name: string;
     page: number;
     size: number;
+    sort: string;
 }
 
 interface MealSearchResponse {
