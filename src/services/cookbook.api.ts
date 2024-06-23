@@ -8,7 +8,7 @@ interface CookbookRequest {
     imageFileName: string;
 }
 
-interface CookbookResponse {
+export interface CookbookResponse {
     id: number;
     name: string;
     imageFileName?: string;
@@ -18,6 +18,7 @@ interface CookbookSearchParams {
     name: string;
     page: number;
     size: number;
+    sort: string;
 }
 
 interface CookbookSearchResponse {
@@ -44,12 +45,6 @@ export const cookbookApi = createApi({
             }),
             invalidatesTags: ['Cookbook'],
         }),
-        getCookbooks: builder.query<CookbookResponse[], void>({
-            query: () => ({
-                url: '',
-            }),
-            providesTags: ['Cookbook'],
-        }),
         searchCookbooks: builder.query<CookbookSearchResponse, CookbookSearchParams>({
             query: (params) => ({
                 url: 'search',
@@ -64,6 +59,5 @@ export const cookbookApi = createApi({
 
 export const {
     useAddCookbookMutation,
-    useGetCookbooksQuery,
     useSearchCookbooksQuery,
 } = cookbookApi;

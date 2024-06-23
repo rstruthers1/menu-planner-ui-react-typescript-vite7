@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useAddRecipeMutation } from '../services/recipe.api.ts';
+import {useSearchCookbooksQuery} from "../services/cookbook.api.ts";
 import FormContainer from "../components/FormContainer.tsx";
 import RenderError from "../components/RenderError.tsx";
 import { Link } from "react-router-dom";
+
+interface CookbookOption {
+    value: number;
+    label: string;
+}
 
 const AddRecipeScreen = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [instructions, setInstructions] = useState('');
     const [url, setUrl] = useState('');
-    const [cookbook, setCookbook] = useState('');
+    const [cookbookId, setCookbookId] = useState<number | undefined>(undefined);
     const [page, setPage] = useState('');
     const [imageFileName, setImageFileName] = useState('');
     const [validated, setValidated] = useState(false);
+    const [cookbookOptions, setCookbookOptions] = useState([] as CookbookOption[]);
 
     const [addRecipe, { isLoading, isSuccess, isError, error }] = useAddRecipeMutation();
+    const { data: cookbooks, isSuccess: cookbookSuccess} = useSearchCookbooksQuery({ name: '', page: 0, size: 10, sort: 'name,asc' });
+
+    useEffect(() => {
+        if (cookbookSuccess) {
+            setCookbookOptions(cookbooks.content.map((cookbook) => ({ value: cookbook.id, label: cookbook.name })));
+        }
+    }, [cookbooks, cookbookSuccess]);
 
     const submitHandler = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,7 +44,7 @@ const AddRecipeScreen = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            await addRecipe({name, description, instructions, url, cookbook, page: pageNumber, imageFileName: imageFileName});
+            await addRecipe({name, description, instructions, url, cookbookId, page: pageNumber, imageFileName: imageFileName});
         }
         setValidated(true);
     }
@@ -105,13 +119,16 @@ const AddRecipeScreen = () => {
 
                 <Form.Group className='my-2' controlId='cookbook'>
                     <Form.Label>Cookbook</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Enter cookbook name'
-                        value={cookbook}
+                    <Form.Select
+                        value={cookbookId}
                         disabled={isLoading}
-                        onChange={(e) => setCookbook(e.target.value)}
-                    ></Form.Control>
+                        onChange={(e) => setCookbookId(parseInt(e.target.value))}
+                        >
+                        <option value=''>Select a cookbook</option>
+                        {cookbookOptions.map((option) => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className='my-2' controlId='page'>
