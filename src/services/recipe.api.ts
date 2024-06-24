@@ -14,7 +14,7 @@ interface RecipeRequest {
     imageFileName: string;
 }
 
-interface RecipeResponse {
+export interface RecipeResponse {
     id: number;
     name: string;
     description: string;
@@ -56,6 +56,14 @@ export const recipeApi = createApi({
             }),
             invalidatesTags: ['Recipe'],
         }),
+        updateRecipe: builder.mutation<RecipeResponse, {id: number; recipe: RecipeRequest}>({
+            query: ({id, recipe}) => ({
+                url: `/${id}`,
+                method: 'PUT',
+                body: recipe,
+            }),
+            invalidatesTags: ['Recipe'],
+        }),
         // Add other endpoints if necessary, like fetching recipes
         getRecipes: builder.query<RecipeResponse[], void>({
             query: () => ({
@@ -75,4 +83,4 @@ export const recipeApi = createApi({
     }),
 });
 
-export const { useAddRecipeMutation, useGetRecipesQuery, useSearchRecipesQuery } = recipeApi;
+export const { useAddRecipeMutation, useUpdateRecipeMutation, useSearchRecipesQuery } = recipeApi;
