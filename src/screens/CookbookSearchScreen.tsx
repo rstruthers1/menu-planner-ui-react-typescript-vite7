@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import {useSearchCookbooksQuery} from "../services/cookbook.api.ts";
-import {Alert, Form, Pagination, Table} from 'react-bootstrap';
+import {CookbookResponse, useSearchCookbooksQuery} from "../services/cookbook.api.ts";
+import {Alert, Form, Modal, Pagination, Table} from 'react-bootstrap';
 import {Link} from "react-router-dom";
+import EditCookbookForm from "../forms/EditCookbookForm.tsx";
 
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
@@ -26,6 +27,7 @@ const CookbookSearchScreen = () => {
 
     const [searchTerm, setSearchTerm] = useState(searchParams.name);
     const [isTyping, setIsTyping] = useState(false);
+    const [selectedCookbook, setSelectedCookbook] = useState<CookbookResponse | null>(null);
 
     // Destructure data and status from the query hook
     const { data, error, isLoading, isFetching, refetch } = useSearchCookbooksQuery(searchParams);
@@ -53,6 +55,15 @@ const CookbookSearchScreen = () => {
         setSearchParams(prevParams => ({ ...prevParams, page }));
     };
 
+    const handleCookbookClick = (cookbook: CookbookResponse) => {
+        setSelectedCookbook(cookbook);
+    }
+
+    const handleCloseModal = () => {
+        setSelectedCookbook(null);
+        refetch();
+    }
+
     useEffect(() => {
         if (searchParams.name || searchParams.page > 0) {
             refetch();
@@ -64,11 +75,11 @@ const CookbookSearchScreen = () => {
             <h1>Search Recipes</h1>
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group controlId="searchTerm">
-                    <Form.Label>Recipe Name</Form.Label>
+                    <Form.Label>Cookbook Name</Form.Label>
                     <Form.Control
                         type="text"
                         name="searchTerm"
-                        placeholder="Enter recipe name"
+                        placeholder="Enter cookbook name"
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
@@ -76,7 +87,7 @@ const CookbookSearchScreen = () => {
             </Form>
 
             {error && (
-                <Alert variant="danger">Error fetching recipes</Alert>
+                <Alert variant="danger">Error fetching cookbooks</Alert>
             )}
 
             {data && data?.content?.length > 0 ? (
@@ -86,14 +97,21 @@ const CookbookSearchScreen = () => {
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>imageFileName</th>
+                            <th>Image File Name</th>
                         </tr>
                         </thead>
                         <tbody>
                         {data.content.map((cookbook) => (
                             <tr key={cookbook.id}>
                                 <td>{cookbook.id}</td>
-                                <td>{cookbook.name}</td>
+                                <td>
+                                    <span
+                                        onClick={() => handleCookbookClick(cookbook)}
+                                        style={{cursor: 'pointer', textDecoration: 'underline', color: 'blue'}}
+                                        >
+                                            {cookbook.name}
+                                    </span>
+                                </td>
                                 <td>{cookbook.imageFileName}</td>
                             </tr>
                         ))}
@@ -119,6 +137,16 @@ const CookbookSearchScreen = () => {
             {(isLoading || isTyping) && <p>Loading...</p>}
             {isFetching && <p>Searching...</p>}
             <Link to='/dashboard' className='mt-4'>Back to Dashboard</Link>
+            {selectedCookbook && (
+                <Modal show={true} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{selectedCookbook.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <EditCookbookForm cookbook={selectedCookbook} onClose={handleCloseModal}/>
+                    </Modal.Body>
+                </Modal>
+            )}
         </div>
     );
 };
