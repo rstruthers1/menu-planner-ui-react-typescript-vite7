@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchRecipesQuery} from "../services/recipe.api.ts";
-import {Form, Table, Pagination, Alert} from 'react-bootstrap';
+import {RecipeResponse, useSearchRecipesQuery} from "../services/recipe.api.ts";
+import {Form, Table, Pagination, Alert, Modal} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import EditRecipeForm from "../forms/EditRecipeForm.tsx";
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -25,6 +26,7 @@ const RecipeSearchScreen = () => {
 
     const [searchTerm, setSearchTerm] = useState(searchParams.name);
     const [isTyping, setIsTyping] = useState(false);
+    const [selectedRecipe, setSelectedRecipe] = useState<RecipeResponse | null>(null);
 
     // Destructure data and status from the query hook
     const { data, error, isLoading, isFetching, refetch } = useSearchRecipesQuery(searchParams);
@@ -51,6 +53,16 @@ const RecipeSearchScreen = () => {
     const handlePageChange = (page: number) => {
         setSearchParams(prevParams => ({ ...prevParams, page }));
     };
+
+    const handleRecipeClick = (recipe: RecipeResponse) => {
+        setSelectedRecipe(recipe);
+    }
+
+    const handleCloseModal = () => {
+        console.log('closing modal');
+        setSelectedRecipe(null);
+        refetch();
+    }
 
     useEffect(() => {
         if (searchParams.name || searchParams.page > 0) {
@@ -95,7 +107,14 @@ const RecipeSearchScreen = () => {
                         {data.content.map((recipe) => (
                             <tr key={recipe.id}>
                                 <td>{recipe.id}</td>
-                                <td>{recipe.name}</td>
+                                <td>
+                                    <span
+                                        style={{ cursor: 'pointer', color: 'blue' }}
+                                        onClick={() => handleRecipeClick(recipe)}
+                                    >
+                                        {recipe.name}
+                                    </span>
+                                </td>
                                 <td>{recipe.description}</td>
                                 <td><a href={recipe.url} target="_blank" rel="noopener noreferrer">{recipe.url}</a></td>
                                 <td>{recipe.imageFileName}</td>
@@ -124,6 +143,18 @@ const RecipeSearchScreen = () => {
             {(isLoading || isTyping) && <p>Loading...</p>}
             {isFetching && <p>Searching...</p>}
             <Link to='/dashboard' className='mt-4'>Back to Dashboard</Link>
+            {selectedRecipe && (
+                <Modal show={true} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{selectedRecipe.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                       <EditRecipeForm recipe={selectedRecipe} onClose={handleCloseModal} />
+                    </Modal.Body>
+                </Modal>
+            )
+
+            }
         </div>
     );
 };
