@@ -45,6 +45,15 @@ export const cookbookApi = createApi({
             }),
             invalidatesTags: ['Cookbook'],
         }),
+        updateCookbook: builder.mutation<CookbookResponse, {id: number; cookbook: CookbookRequest}>({
+            query: ({id, cookbook}) => ({
+                url: `/${id}`,
+                method: 'PUT',
+                body: cookbook,
+            }),
+            invalidatesTags: ['Cookbook'],
+        }),
+
         searchCookbooks: builder.query<CookbookSearchResponse, CookbookSearchParams>({
             query: (params) => ({
                 url: 'search',
@@ -60,4 +69,5 @@ export const cookbookApi = createApi({
 export const {
     useAddCookbookMutation,
     useSearchCookbooksQuery,
+    useUpdateCookbookMutation,
 } = cookbookApi;
