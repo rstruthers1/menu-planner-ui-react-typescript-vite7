@@ -1,0 +1,17 @@
+.hero-container {
+    background-image: url('/menu-planner-hero.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-card {
+    background: rgba(255, 255, 255, 0.6) !important; /* Semi-transparent white background for readability */
+    width: 75%; /* Ensure the card doesn't take the full width */
+    max-width: 800px; /* Optionally set a max width */
+}
