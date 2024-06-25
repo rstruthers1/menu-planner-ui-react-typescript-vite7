@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchMealsQuery } from '../services/meal.api.ts';
-import {Form, Table, Pagination, Alert} from 'react-bootstrap';
+import {Form, Table, Pagination, Alert, Container} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
@@ -59,7 +59,7 @@ const MenuSearchScreen = () => {
     }, [searchParams, refetch]);
 
     return (
-        <div>
+        <Container>
             <h1>Search Meals</h1>
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group controlId="searchTerm">
@@ -120,7 +120,7 @@ const MenuSearchScreen = () => {
             {(isLoading || isTyping) && <p>Loading...</p>}
             {isFetching && <p>Searching...</p>}
             <Link to='/dashboard' className='mt-4'>Back to Dashboard</Link>
-        </div>
+        </Container>
     );
 };
 
