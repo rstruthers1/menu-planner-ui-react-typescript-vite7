@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {RecipeResponse, useSearchRecipesQuery} from "../services/recipe.api.ts";
-import {Form, Table, Pagination, Alert, Modal} from 'react-bootstrap';
+import {Form, Table, Pagination, Alert, Modal, Container} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import EditRecipeForm from "../forms/EditRecipeForm.tsx";
 
@@ -71,7 +71,7 @@ const RecipeSearchScreen = () => {
     }, [searchParams, refetch]);
 
     return (
-        <div>
+        <Container>
             <h1>Search Recipes</h1>
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group controlId="searchTerm">
@@ -155,7 +155,7 @@ const RecipeSearchScreen = () => {
             )
 
             }
-        </div>
+        </Container>
     );
 };
 

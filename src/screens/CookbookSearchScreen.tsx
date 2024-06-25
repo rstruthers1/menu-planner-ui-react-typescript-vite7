@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {CookbookResponse, useSearchCookbooksQuery} from "../services/cookbook.api.ts";
-import {Alert, Form, Modal, Pagination, Table} from 'react-bootstrap';
+import {Alert, Container, Form, Modal, Pagination, Table} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 import EditCookbookForm from "../forms/EditCookbookForm.tsx";
 
@@ -71,7 +71,7 @@ const CookbookSearchScreen = () => {
     }, [searchParams, refetch]);
 
     return (
-        <div>
+        <Container>
             <h1>Search Recipes</h1>
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group controlId="searchTerm">
@@ -147,7 +147,7 @@ const CookbookSearchScreen = () => {
                     </Modal.Body>
                 </Modal>
             )}
-        </div>
+        </Container>
     );
 };
 
