@@ -3,7 +3,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const BASE_URL = `${baseURL}/api/users`;
 
-interface UserResponse {
+export interface UserResponse {
     id: number;
     firstName: string;
     lastName: string;

@@ -1,5 +1,6 @@
-import {Container, Row, Col} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 import React from "react";
+import TopOffsetContainer from "./TopOffsetContainer.tsx";
 
 export interface FormContainerProps {
     children: React.ReactNode;
@@ -8,13 +9,13 @@ export interface FormContainerProps {
 
 const FormContainer = (props: FormContainerProps) => {
     return (
-        <Container>
-            <Row className='justify-content-md-center mt-5'>
+        <TopOffsetContainer>
+            <Row className='justify-content-md-center'>
                 <Col xs={12} md={6} className='card p-5'>
                     {props.children}
                 </Col>
             </Row>
-        </Container>
+        </TopOffsetContainer>
     );
 };
 

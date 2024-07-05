@@ -16,9 +16,12 @@ import PrivateRoute from "./components/PrivateRoute.tsx";
 import AddMealScreen from "./screens/AddMealScreen.tsx";
 import MenuSearchScreen from "./screens/MenuSearchScreen.tsx";
 import AddRecipeScreen from "./screens/AddRecipeScreen.tsx";
-import RecipeSearchScreen from "./screens/RecipSearchScreen.tsx";
+import RecipeSearchScreen from "./screens/RecipeSearchScreen.tsx";
 import AddCookbookScreen from "./screens/AddCookbookScreen.tsx";
 import CookbookSearchScreen from "./screens/CookbookSearchScreen.tsx";
+import AllUserGroupsScreen from "./screens/AllUserGroupsScreen.tsx";
+import AddGroupScreen from "./screens/AddGroupScreen.tsx";
+import MenuPlanningScreen from "./screens/MenuPlanningScreen.tsx";
 
 
 const router = createBrowserRouter(
@@ -38,6 +41,9 @@ const router = createBrowserRouter(
                 <Route path="/search-recipes" element={<RecipeSearchScreen/>}/>
                 <Route path="/add-cookbook" element={<AddCookbookScreen/>}/>
                 <Route path="/search-cookbooks" element={<CookbookSearchScreen/>}/>
+                <Route path="/all-user-groups" element={<AllUserGroupsScreen/>}/>
+                <Route path="/add-user-group" element={<AddGroupScreen/>}/>
+                <Route path="/menu-planning/*" element={<MenuPlanningScreen/>} />
             </Route>
 
         </Route>

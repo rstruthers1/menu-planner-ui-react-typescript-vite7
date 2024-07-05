@@ -12,6 +12,8 @@ interface RecipeRequest {
     cookbookId?: number;
     page?: number;
     imageFileName: string;
+    groupId?: number | undefined;
+    isPublic: boolean;
 }
 
 export interface RecipeResponse {
@@ -23,6 +25,8 @@ export interface RecipeResponse {
     cookbook?: CookbookResponse;
     page?: number;
     imageFileName?: string;
+    groupId?: number | undefined;
+    isPublic: boolean;
 }
 
 interface RecipeSearchParams {

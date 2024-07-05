@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {CookbookResponse, useSearchCookbooksQuery} from "../services/cookbook.api.ts";
-import {Alert, Container, Form, Modal, Pagination, Table} from 'react-bootstrap';
+import {Alert, Form, Modal, Pagination, Table} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 import EditCookbookForm from "../forms/EditCookbookForm.tsx";
+import TopOffsetContainer from "../components/TopOffsetContainer.tsx";
 
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
@@ -71,7 +72,7 @@ const CookbookSearchScreen = () => {
     }, [searchParams, refetch]);
 
     return (
-        <Container>
+        <TopOffsetContainer>
             <h1>Search Recipes</h1>
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group controlId="searchTerm">
@@ -147,7 +148,7 @@ const CookbookSearchScreen = () => {
                     </Modal.Body>
                 </Modal>
             )}
-        </Container>
+        </TopOffsetContainer>
     );
 };
 
