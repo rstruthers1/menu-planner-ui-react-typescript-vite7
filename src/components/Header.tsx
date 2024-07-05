@@ -30,10 +30,20 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+            <Navbar bg='dark' variant='dark' expand='lg' fixed="top" collapseOnSelect>
                 <Container>
                     <Navbar.Brand as={Link} to='/'>Menu Planner</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
+                            {userInfo && (
+                                <>
+                                    <Nav.Link as={Link} to='/dashboard'>Dashboard</Nav.Link>
+                                    <Nav.Link as={Link} to ='/menu-planning'>Menu Planning</Nav.Link>
+                                </>
+                            )}
+                        </Nav>
+                    </Navbar.Collapse>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ms-auto">
                             {userInfo ? (

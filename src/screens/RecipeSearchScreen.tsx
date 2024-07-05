@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {RecipeResponse, useSearchRecipesQuery} from "../services/recipe.api.ts";
-import {Form, Table, Pagination, Alert, Modal, Container} from 'react-bootstrap';
+import {Form, Table, Pagination, Alert, Modal} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import EditRecipeForm from "../forms/EditRecipeForm.tsx";
+import TopOffsetContainer from "../components/TopOffsetContainer.tsx";
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -71,7 +72,7 @@ const RecipeSearchScreen = () => {
     }, [searchParams, refetch]);
 
     return (
-        <Container>
+        <TopOffsetContainer>
             <h1>Search Recipes</h1>
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Form.Group controlId="searchTerm">
@@ -155,7 +156,7 @@ const RecipeSearchScreen = () => {
             )
 
             }
-        </Container>
+        </TopOffsetContainer>
     );
 };
 

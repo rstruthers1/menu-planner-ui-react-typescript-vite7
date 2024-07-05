@@ -5,6 +5,8 @@ import {useSearchCookbooksQuery} from "../services/cookbook.api.ts";
 import FormContainer from "../components/FormContainer.tsx";
 import RenderError from "../components/RenderError.tsx";
 import { Link } from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../app/store.ts";
 
 interface CookbookOption {
     value: number;
@@ -19,11 +21,13 @@ const AddRecipeScreen = () => {
     const [cookbookId, setCookbookId] = useState<number | undefined>(undefined);
     const [page, setPage] = useState('');
     const [imageFileName, setImageFileName] = useState('');
+    const [isPublic, setIsPublic] = useState(false);
     const [validated, setValidated] = useState(false);
     const [cookbookOptions, setCookbookOptions] = useState([] as CookbookOption[]);
 
     const [addRecipe, { isLoading, isSuccess, isError, error }] = useAddRecipeMutation();
     const { data: cookbooks, isSuccess: cookbookSuccess} = useSearchCookbooksQuery({ name: '', page: 0, size: 10, sort: 'name,asc' });
+    const currentGroupId: number | undefined = useSelector((state:RootState) => state.group.currentGroupId);
 
     useEffect(() => {
         if (cookbookSuccess) {
@@ -44,7 +48,15 @@ const AddRecipeScreen = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            await addRecipe({name, description, instructions, url, cookbookId, page: pageNumber, imageFileName: imageFileName});
+            await addRecipe({name,
+                description,
+                instructions,
+                url, cookbookId,
+                page: pageNumber,
+                imageFileName: imageFileName,
+                groupId: currentGroupId,
+                isPublic
+            });
         }
         setValidated(true);
     }
@@ -89,6 +101,15 @@ const AddRecipeScreen = () => {
                         disabled={isLoading}
                         onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
+                </Form.Group>
+                <Form.Group className='my-2' controlId='isPublic'>
+                    <Form.Check
+                        type="checkbox"
+                        label="Public"
+                        checked={isPublic}
+                        onChange={(e) => setIsPublic(e.target.checked)}
+                        disabled={isLoading}
+                    />
                 </Form.Group>
 
 

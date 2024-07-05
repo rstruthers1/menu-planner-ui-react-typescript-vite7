@@ -6,17 +6,21 @@ import {mealApi} from "../services/meal.api.ts";
 import {recipeApi} from "../services/recipe.api.ts";
 import {cookbookApi} from "../services/cookbook.api.ts";
 import authReducer from '../slices/authSlice';
+import groupReducer from '../slices/groupSlice.ts'
+import {userGroupApi} from "../services/usergroup.api.ts";
 
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        group: groupReducer,
         [authApi.reducerPath] : authApi.reducer,
         [helloApi.reducerPath]: helloApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
         [mealApi.reducerPath]: mealApi.reducer,
         [recipeApi.reducerPath]: recipeApi.reducer,
         [cookbookApi.reducerPath]: cookbookApi.reducer,
+        [userGroupApi.reducerPath]: userGroupApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -25,7 +29,8 @@ export const store = configureStore({
             .concat(userApi.middleware)
             .concat(mealApi.middleware)
             .concat(recipeApi.middleware)
-            .concat(cookbookApi.middleware),
+            .concat(cookbookApi.middleware)
+            .concat(userGroupApi.middleware),
     devTools: true
 });
 
