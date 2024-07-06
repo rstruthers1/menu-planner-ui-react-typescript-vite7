@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { setGroup } from '../slices/groupSlice';
-import {useGetUserGroupsQuery } from '../services/usergroup.api.ts';
+import {useGetUsersGroupsQuery } from '../services/usergroup.api.ts';
 import {Form} from "react-bootstrap";
 
 const GroupSelector = () => {
     const dispatch = useDispatch();
-    const { data: groups } = useGetUserGroupsQuery();
+    const { data: groups } = useGetUsersGroupsQuery();
     const currentGroupId = useSelector((state: RootState) => state.group.currentGroupId);
 
     useEffect(() => {
