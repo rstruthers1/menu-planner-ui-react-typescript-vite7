@@ -24,7 +24,7 @@ const  EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe, onClose }) => 
     const [cookbookId, setCookbookId] = useState<number | undefined>(recipe.cookbook?.id);
     const [page, setPage] = useState(recipe.page?.toString() || '');
     const [imageFileName, setImageFileName] = useState(recipe.imageFileName || '');
-    const [isPublic, setIsPublic] = useState(false);
+    const [isPublic, setIsPublic] = useState(recipe.isPublic);
     const [validated, setValidated] = useState(false);
     const [cookbookOptions, setCookbookOptions] = useState([] as CookbookOption[]);
 

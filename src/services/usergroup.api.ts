@@ -27,6 +27,10 @@ export const userGroupApi = createApi({
             query: () => '',
             providesTags: ['UserGroup'],
         }),
+        getUsersGroups: builder.query<UserGroupResponse[], void>({
+            query: () => 'mygroups',
+            providesTags: ['UserGroup'],
+        }),
         addUserGroup: builder.mutation<UserGroupResponse, UserGroupRequest>({
             query: (userGroup) => ({
                 url: '',
@@ -38,4 +42,4 @@ export const userGroupApi = createApi({
     }),
 });
 
-export const {useGetUserGroupsQuery, useAddUserGroupMutation} = userGroupApi;
+export const {useGetUserGroupsQuery, useAddUserGroupMutation, useGetUsersGroupsQuery} = userGroupApi;
