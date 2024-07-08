@@ -4,6 +4,8 @@ import {Form, Table, Pagination, Alert, Modal} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import EditRecipeForm from "../forms/EditRecipeForm.tsx";
 import TopOffsetContainer from "../components/TopOffsetContainer.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../app/store.ts";
 
 const debounce = <F extends (...args: string[]) => void>(func: F, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -18,16 +20,22 @@ const debounce = <F extends (...args: string[]) => void>(func: F, delay: number)
 };
 
 const RecipeSearchScreen = () => {
+    const currentGroupId: number | undefined = useSelector((state:RootState) => state.group.currentGroupId)
+
     const [searchParams, setSearchParams] = useState({
         name: '',
+        includePublic: true,
+        groupId: currentGroupId,
         page: 0,
         size: 10,
         sort: 'name,asc',
     });
 
     const [searchTerm, setSearchTerm] = useState(searchParams.name);
+    const [includePublic, setIncludePublic] = useState(searchParams.includePublic);
     const [isTyping, setIsTyping] = useState(false);
     const [selectedRecipe, setSelectedRecipe] = useState<RecipeResponse | null>(null);
+
 
     // Destructure data and status from the query hook
     const { data, error, isLoading, isFetching, refetch } = useSearchRecipesQuery(searchParams);
@@ -38,17 +46,29 @@ const RecipeSearchScreen = () => {
             setSearchParams(prevParams => ({
                 ...prevParams,
                 name: term,
+                groupId: currentGroupId,
+                includePublic: includePublic,
                 page: 0, // Reset to first page on new search
             }));
             setIsTyping(false);
         }, 500),
-        []
+        [currentGroupId, includePublic]
     );
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
         setIsTyping(true);
         debouncedSearch(e.target.value);
+    };
+
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIncludePublic(e.target.checked);
+        setSearchParams(prevParams => ({
+            ...prevParams,
+            includePublic: e.target.checked,
+            groupId: currentGroupId,
+            page: 0, // Reset to first page on new search
+        }));
     };
 
     const handlePageChange = (page: number) => {
@@ -66,7 +86,15 @@ const RecipeSearchScreen = () => {
     }
 
     useEffect(() => {
-        if (searchParams.name || searchParams.page > 0) {
+        setSearchParams(prevParams => ({
+            ...prevParams,
+            groupId: currentGroupId,
+            page: 0, // Reset to first page on group change
+        }));
+    }, [currentGroupId]);
+
+    useEffect(() => {
+        if (searchParams.name || searchParams.page > 0 || searchParams.includePublic !== undefined) {
             refetch();
         }
     }, [searchParams, refetch]);
@@ -83,6 +111,14 @@ const RecipeSearchScreen = () => {
                         placeholder="Enter recipe name"
                         value={searchTerm}
                         onChange={handleSearchChange}
+                    />
+                </Form.Group>
+                <Form.Group controlId="includePublic">
+                    <Form.Check
+                        type="checkbox"
+                        label="Include Public Recipes"
+                        checked={includePublic}
+                        onChange={handleCheckboxChange}
                     />
                 </Form.Group>
             </Form>
