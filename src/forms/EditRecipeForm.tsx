@@ -49,7 +49,7 @@ const  EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe, onClose }) => 
             pageNumber = undefined;
         }
         const form = e.currentTarget;
-        if (form.checkValidity() === false) {
+        if (!form.checkValidity()) {
             e.stopPropagation();
         } else {
             await updateRecipe({id: recipe.id, recipe: {name, description, instructions, url, cookbookId, page: pageNumber, imageFileName: imageFileName, isPublic, groupId: currentGroupId}});
@@ -86,7 +86,7 @@ const  EditRecipeForm: React.FC<EditRecipeFormProps> = ({ recipe, onClose }) => 
 
   return (
       <Form onSubmit={submitHandler} noValidate validated={validated}>
-          <h1>Edit Cookbook</h1>
+          <h1>Edit Recipe</h1>
           {isError && <Alert title="Error" variant="warning"><RenderError error={error}/></Alert>}
 
               <Form.Group className='my-2' controlId='name'>

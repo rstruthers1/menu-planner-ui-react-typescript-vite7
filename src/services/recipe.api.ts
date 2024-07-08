@@ -31,6 +31,8 @@ export interface RecipeResponse {
 
 interface RecipeSearchParams {
     name: string;
+    includePublic?: boolean;
+    groupId?: number | undefined;
     page: number;
     size: number;
     sort: string;
