@@ -18,6 +18,17 @@
     color: #000;
 }
 
+.side-menu .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.side-menu .nav-header {
+    padding-left: 15px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 .side-menu .ms-3 {
     margin-left: 1rem;
 }
