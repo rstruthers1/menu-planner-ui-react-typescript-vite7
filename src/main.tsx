@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom';
 import App from './App.tsx'
-// import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {store} from './app/store';
 import {Provider} from 'react-redux';
@@ -22,6 +21,7 @@ import CookbookSearchScreen from "./screens/CookbookSearchScreen.tsx";
 import AllUserGroupsScreen from "./screens/AllUserGroupsScreen.tsx";
 import AddGroupScreen from "./screens/AddGroupScreen.tsx";
 import MenuPlanningScreen from "./screens/MenuPlanningScreen.tsx";
+
 
 
 const router = createBrowserRouter(
