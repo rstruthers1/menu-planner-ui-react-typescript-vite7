@@ -1,3 +1,4 @@
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -22,6 +23,15 @@ export interface MealPlanningDayResponse {
     temperatureUnit?: string;
 }
 
+export interface MealPlanningWeekRequest {
+    groupId: number | undefined;
+    startDate: string;
+}
+
+export interface MealPlanningWeekResponse {
+    mealPlanningDays: MealPlanningDayResponse[];
+}
+
 export const mealPlanningDayApi = createApi({
     reducerPath: 'mealPlanningDayApi',
     baseQuery: fetchBaseQuery({
@@ -38,8 +48,15 @@ export const mealPlanningDayApi = createApi({
             }),
             invalidatesTags: ['MealPlanningDay'],
         }),
-        // other endpoints can be added here
+        fetchOrCreateMealPlanningWeek: builder.mutation<MealPlanningWeekResponse, MealPlanningWeekRequest>({
+            query: (mealPlanningWeekRequest) => ({
+                url: '/week',
+                method: 'POST',
+                body: mealPlanningWeekRequest,
+            }),
+            invalidatesTags: ['MealPlanningDay'],
+        }),
     }),
 });
 
-export const { useCreateMealPlanningDayMutation } = mealPlanningDayApi;
+export const { useCreateMealPlanningDayMutation, useFetchOrCreateMealPlanningWeekMutation } = mealPlanningDayApi;
