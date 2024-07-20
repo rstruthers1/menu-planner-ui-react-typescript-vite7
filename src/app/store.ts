@@ -7,6 +7,7 @@ import {recipeApi} from "../services/recipe.api.ts";
 import {cookbookApi} from "../services/cookbook.api.ts";
 import authReducer from '../slices/authSlice';
 import groupReducer from '../slices/groupSlice.ts'
+import startDateReducer from '../slices/startDateSlice.ts';
 import {userGroupApi} from "../services/usergroup.api.ts";
 import {mealPlanningDayApi} from "../services/mealPlanningDay.api.ts";
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     reducer: {
         auth: authReducer,
         group: groupReducer,
+        startDate: startDateReducer,
         [authApi.reducerPath] : authApi.reducer,
         [helloApi.reducerPath]: helloApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
